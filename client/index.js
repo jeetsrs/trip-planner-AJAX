@@ -25,14 +25,14 @@ var hotelsData = function (hotels) {
   var hotelsMenu = document.getElementById('hotels-choices');
   hotels.forEach((hotel) => {
     var option = document.createElement('option');
+    // should the value be the coordinates?? If it's coordinates, we can pass it to markerfactory
     option.value = hotel.name;
     option.text = hotel.name;
     hotelsMenu.append(option);
   });
 
   var hotelButton = document.getElementById('hotels-add').addEventListener('click', (event) => {
-    // Add shit here
-    // Add marker code here
+   // FIX MARKER CODE! - PASS THE TYPE AND THE COORDINATES
 
     var selectedHotel = document.getElementById('hotels-choices').value;
     markerFactory(selectedHotel);

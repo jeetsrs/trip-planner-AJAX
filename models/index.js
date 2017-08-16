@@ -38,4 +38,8 @@ module.exports = {
   Restaurant,
   Activity,
   Place
-}
+};
+
+// create marker factory
+// pass coordinates to markerFactory
+// create marker
