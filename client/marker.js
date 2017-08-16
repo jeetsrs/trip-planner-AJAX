@@ -7,6 +7,7 @@ const iconURLs = {
 };
 
 const buildMarker = (type, coords) => {
+  console.log(coords);
   const markerEl = document.createElement("div");
   markerEl.style.backgroundSize = "contain";
   markerEl.style.width = "32px";

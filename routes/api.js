@@ -15,7 +15,6 @@ router.get('/', (req, res, next) => {
   .then(function(hotels) {
     allAttractions.hotels = hotels;
     console.log(allAttractions.hotels);
-    console.log()
     return Restaurant.findAll({
         include: [Place]
     });

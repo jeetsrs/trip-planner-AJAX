@@ -552,36 +552,39 @@ const map = new mapboxgl.Map({
   style: 'mapbox://styles/mapbox/streets-v10'
 });
 
-
-var markerFactory = function(name){
-
-  console.log();
-}
+const selectedItems = {};
 
 var hotelsData = function (hotels) {
   var hotelsMenu = document.getElementById('hotels-choices');
   hotels.forEach((hotel) => {
     var option = document.createElement('option');
-    // should the value be the coordinates?? If it's coordinates, we can pass it to markerfactory
     option.value = hotel.name;
     option.text = hotel.name;
     hotelsMenu.append(option);
   });
 
   var hotelButton = document.getElementById('hotels-add').addEventListener('click', (event) => {
-   // FIX MARKER CODE! - PASS THE TYPE AND THE COORDINATES
-
     var selectedHotel = document.getElementById('hotels-choices').value;
-    markerFactory(selectedHotel);
+
+    for (var index = 0; index < hotels.length; index++) {
+      if (hotels[index].name === document.getElementById('hotels-choices').value) {
+        selectedItems[selectedHotel] = hotels[index].place.location;
+      }
+    }
+
+    buildMarker('hotels', selectedItems[selectedHotel]).addTo(map);
+    map.flyTo({
+      center: selectedItems[selectedHotel]
+    });
 
     var listHotel = document.createElement("li");
-    listHotel.append(selectedHotel);
+    listHotel.className = 'itinerary-item';
     document.getElementById("hotels-list").append(listHotel);
 
     var removeButton = document.createElement('button');
-    removeButton.className = 'btn btn-danger btn circle pull-right'
+    removeButton.className = 'btn btn-xs btn-danger remove btn-circle';
     removeButton.append('x');
-    listHotel.append(removeButton);
+    listHotel.append(selectedHotel, removeButton);
     removeButton.addEventListener('click', (event) => {
       listHotel.remove();
       // remove marker here
@@ -599,17 +602,28 @@ var restaurantsData = function (restaurants) {
   });
 
   var restaurantButton = document.getElementById('restaurants-add').addEventListener('click', (event) => {
-    // Add shit here
-    // Add marker code here
     var selectedRestaurants = document.getElementById('restaurants-choices').value;
+
+    for (var index = 0; index < restaurants.length; index++) {
+      if (restaurants[index].name === document.getElementById('restaurants-choices').value) {
+        selectedItems[selectedRestaurants] = restaurants[index].place.location;
+      }
+    }
+
+    buildMarker('restaurants', selectedItems[selectedRestaurants]).addTo(map);
+    map.flyTo({
+      center: selectedItems[selectedRestaurants]
+    });
+
     var listRestaurants = document.createElement("li");
-    listRestaurants.append(selectedRestaurants);
+    listRestaurants.className = 'itinerary-item';
     document.getElementById("restaurants-list").append(listRestaurants);
 
     var removeButton = document.createElement('button');
-    removeButton.className = 'btn btn-danger btn circle pull-right'
+    removeButton.className = 'btn btn-xs btn-danger remove btn-circle';
     removeButton.append('x');
-    listRestaurants.append(removeButton);
+    // listRestaurants.append(removeButton);
+    listRestaurants.append(selectedRestaurants, removeButton);
     removeButton.addEventListener('click', (event) => {
       listRestaurants.remove();
       // remove marker here
@@ -627,17 +641,27 @@ var activitiesData = function (activities) {
   });
 
   var activitiesButton = document.getElementById('activities-add').addEventListener('click', (event) => {
-    // Add shit here
-    // Add marker code here
     var selectedActivity = document.getElementById('activities-choices').value;
+
+    for (var index = 0; index < activities.length; index++) {
+      if (activities[index].name === document.getElementById('activities-choices').value) {
+        selectedItems[selectedActivity] = activities[index].place.location;
+      }
+    }
+
+    buildMarker('activities', selectedItems[selectedActivity]).addTo(map);
+    map.flyTo({
+      center: selectedItems[selectedActivity]
+    });
+
     var listActivities = document.createElement("li");
-    listActivities.append(selectedActivity);
+    listActivities.className = 'itinerary-item';
     document.getElementById("activities-list").append(listActivities);
 
     var removeButton = document.createElement('button');
-    removeButton.className = 'btn btn-danger btn circle pull-right'
+    removeButton.className = 'btn btn-xs btn-danger remove btn-circle';
     removeButton.append('x');
-    listActivities.append(removeButton);
+    listActivities.append(selectedActivity, removeButton);
     removeButton.addEventListener('click', (event) => {
       listActivities.remove();
       // remove marker here
@@ -705,6 +729,7 @@ const iconURLs = {
 };
 
 const buildMarker = (type, coords) => {
+  console.log(coords);
   const markerEl = document.createElement("div");
   markerEl.style.backgroundSize = "contain";
   markerEl.style.width = "32px";
