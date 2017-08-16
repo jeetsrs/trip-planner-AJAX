@@ -37,8 +37,7 @@ var hotelsData = function (hotels) {
       }
     }
 
-    var hotelMarker = buildMarker('hotels', selectedItems[selectedHotel]);
-    hotelMarker.addTo(map);
+    var hotelMarker = buildMarker('hotels', selectedItems[selectedHotel]).addTo(map);
       map.flyTo({
           // These options control the ending camera position: centered at
           // the target, at zoom level 9, and north up.
@@ -94,8 +93,7 @@ var restaurantsData = function (restaurants) {
       }
     }
 
-    var restaurantMarker = buildMarker('restaurants', selectedItems[selectedRestaurants]);
-    restaurantMarker.addTo(map);
+    var restaurantMarker = buildMarker('restaurants', selectedItems[selectedRestaurants]).addTo(map);
       map.flyTo({
           // These options control the ending camera position: centered at
           // the target, at zoom level 9, and north up.
@@ -151,8 +149,7 @@ var activitiesData = function (activities) {
       }
     }
 
-    var activityMarker = buildMarker('activities', selectedItems[selectedActivity]);
-    activityMarker.addTo(map);
+    var activityMarker = buildMarker('activities', selectedItems[selectedActivity]).addTo(map);
       map.flyTo({
           // These options control the ending camera position: centered at
           // the target, at zoom level 9, and north up.
