@@ -9,16 +9,22 @@ var Activity = require("../models").Activity;
 router.get('/', (req, res, next) => {
   var allAttractions = {};
   console.log("Yaaa in the hotels");
-  Hotel.findAll()
+  Hotel.findAll({
+      include: [Place]
+  })
   .then(function(hotels) {
     allAttractions.hotels = hotels;
     console.log(allAttractions.hotels);
     console.log()
-    return Restaurant.findAll();
+    return Restaurant.findAll({
+        include: [Place]
+    });
   })
   .then(function(restaurants) {
     allAttractions.restaurants = restaurants;
-    return Activity.findAll();
+    return Activity.findAll({
+        include: [Place]
+    });
   })
   .then(function(activities) {
     allAttractions.activities = activities;
