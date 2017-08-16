@@ -2,11 +2,13 @@
 // The data can then be loaded with the node seed.js
 
 var Promise = require("bluebird");
-var db = require("./models").db;
-var Place = require("./models").Place;
-var Hotel = require("./models").Hotel;
-var Restaurant = require("./models").Restaurant;
-var Activity = require("./models").Activity;
+var db = require("../models").db;
+var Place = require("../models").Place;
+var Hotel = require("../models").Hotel;
+var Restaurant = require("../models").Restaurant;
+var Activity = require("../models").Activity;
+
+const app = require("./app");
 
 var data = {
   hotel: [
@@ -548,6 +550,7 @@ db
     console.log("Dropped old data, now inserting data");
     return Promise.map(Object.keys(data), function(name) {
       return Promise.map(data[name], function(item) {
+        console.log('we are here**********', item);
         return db.model(name).create(item, {
           include: [Place]
         });
@@ -565,3 +568,5 @@ db
     console.log("connection closed"); // the connection eventually closes, we just manually do so to end the process quickly
     return null; // silences bluebird warning about using non-returned promises inside of handlers.
   });
+
+
