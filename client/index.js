@@ -4,16 +4,18 @@ const buildMarker = require('./marker');
 /*
  * Instantiate the Map
  */
-
+var startCoord = [-74.0, 40.731];
 mapboxgl.accessToken = 'pk.eyJ1IjoiamVldHNycyIsImEiOiJjajY4M3FpM2swYnhrMzRyMGt1dGRmM2g4In0.uVm4cxhoLxloxzDxSTPeNg';
 const map = new mapboxgl.Map({
   container: 'map-canvas',
-  center: [-74.0, 40.731],
+  center: startCoord,
   zoom: 12.5, // starting zoom
   pitch: 35,
   bearing: 20,
   style: 'mapbox://styles/mapbox/streets-v10'
 });
+
+
 
 const selectedItems = {};
 
@@ -35,10 +37,27 @@ var hotelsData = function (hotels) {
       }
     }
 
-    buildMarker('hotels', selectedItems[selectedHotel]).addTo(map);
-    map.flyTo({
-      center: selectedItems[selectedHotel]
-    });
+    var hotelMarker = buildMarker('hotels', selectedItems[selectedHotel]);
+    hotelMarker.addTo(map);
+      map.flyTo({
+          // These options control the ending camera position: centered at
+          // the target, at zoom level 9, and north up.
+          center: selectedItems[selectedHotel],
+          zoom: 17,
+          //bearing: 0,
+
+          // These options control the flight curve, making it move
+          // slowly and zoom out almost completely before starting
+          // to pan.
+          speed: 0.8, // make the flying slow
+         curve: 1, // change the speed at which it zooms out
+
+          // This can be any easing function: it takes a number between
+          // 0 and 1 and returns another number between 0 and 1.
+          // easing: function (t) {
+          //     return t;
+          // }
+      });
 
     var listHotel = document.createElement("li");
     listHotel.className = 'itinerary-item';
@@ -50,7 +69,9 @@ var hotelsData = function (hotels) {
     listHotel.append(selectedHotel, removeButton);
     removeButton.addEventListener('click', (event) => {
       listHotel.remove();
+      hotelMarker.remove();
       // remove marker here
+
     });
   });
 };
@@ -73,10 +94,27 @@ var restaurantsData = function (restaurants) {
       }
     }
 
-    buildMarker('restaurants', selectedItems[selectedRestaurants]).addTo(map);
-    map.flyTo({
-      center: selectedItems[selectedRestaurants]
-    });
+    var restaurantMarker = buildMarker('restaurants', selectedItems[selectedRestaurants]);
+    restaurantMarker.addTo(map);
+      map.flyTo({
+          // These options control the ending camera position: centered at
+          // the target, at zoom level 9, and north up.
+          center: selectedItems[selectedRestaurants],
+          zoom: 17,
+          //bearing: 0,
+
+          // These options control the flight curve, making it move
+          // slowly and zoom out almost completely before starting
+          // to pan.
+          speed: 0.8, // make the flying slow
+          curve: 1, // change the speed at which it zooms out
+
+          // This can be any easing function: it takes a number between
+          // 0 and 1 and returns another number between 0 and 1.
+          // easing: function (t) {
+          //     return t;
+          // }
+      });
 
     var listRestaurants = document.createElement("li");
     listRestaurants.className = 'itinerary-item';
@@ -89,6 +127,7 @@ var restaurantsData = function (restaurants) {
     listRestaurants.append(selectedRestaurants, removeButton);
     removeButton.addEventListener('click', (event) => {
       listRestaurants.remove();
+      restaurantMarker.remove();
       // remove marker here
     });
   });
@@ -112,10 +151,27 @@ var activitiesData = function (activities) {
       }
     }
 
-    buildMarker('activities', selectedItems[selectedActivity]).addTo(map);
-    map.flyTo({
-      center: selectedItems[selectedActivity]
-    });
+    var activityMarker = buildMarker('activities', selectedItems[selectedActivity]);
+    activityMarker.addTo(map);
+      map.flyTo({
+          // These options control the ending camera position: centered at
+          // the target, at zoom level 9, and north up.
+          center: selectedItems[selectedActivity],
+          zoom: 17,
+          //bearing: 0,
+
+          // These options control the flight curve, making it move
+          // slowly and zoom out almost completely before starting
+          // to pan.
+          speed: 0.8, // make the flying slow
+          curve: 1, // change the speed at which it zooms out
+
+          // This can be any easing function: it takes a number between
+          // 0 and 1 and returns another number between 0 and 1.
+          // easing: function (t) {
+          //     return t;
+          // }
+      });
 
     var listActivities = document.createElement("li");
     listActivities.className = 'itinerary-item';
@@ -127,6 +183,7 @@ var activitiesData = function (activities) {
     listActivities.append(selectedActivity, removeButton);
     removeButton.addEventListener('click', (event) => {
       listActivities.remove();
+      activityMarker.remove();
       // remove marker here
     });
   });
